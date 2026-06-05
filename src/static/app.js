@@ -42,19 +42,21 @@ document.addEventListener("DOMContentLoaded", () => {
           details.participants.forEach((participantEmail) => {
             const participantItem = document.createElement("li");
             participantItem.className = "participant-item";
-            participantItem.innerHTML = `
-              <span class="participant-email">${participantEmail}</span>
-              <button
-                type="button"
-                class="participant-delete-button"
-                data-activity="${encodeURIComponent(name)}"
-                data-email="${encodeURIComponent(participantEmail)}"
-                title="Unregister ${participantEmail}"
-                aria-label="Unregister ${participantEmail}"
-              >
-                &times;
-              </button>
-            `;
+
+            const emailSpan = document.createElement("span");
+            emailSpan.className = "participant-email";
+            emailSpan.textContent = participantEmail;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.className = "participant-delete-button";
+            deleteButton.dataset.activity = encodeURIComponent(name);
+            deleteButton.dataset.email = encodeURIComponent(participantEmail);
+            deleteButton.title = `Unregister ${participantEmail}`;
+            deleteButton.setAttribute("aria-label", `Unregister ${participantEmail}`);
+            deleteButton.textContent = "×";
+
+            participantItem.append(emailSpan, deleteButton);
             participantsList.appendChild(participantItem);
           });
         }
